@@ -9,10 +9,14 @@
         }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
-
-    <script src="jsonData.js"></script>
-
     <script>
+        /*
+        This version uses JSONP to get the data.
+         */
+
+
+
+
         var map;
 
         function initialize() {
@@ -24,31 +28,15 @@
             map = new google.maps.Map(document.getElementById('map-canvas'),
                     mapOptions);
 
+            // Create a <script> tag and set the USGS URL as the source.
+            var script = document.createElement('script');
+            script.src = 'http://earthquake.usgs.gov/earthquakes/feed/geojsonp/2.5/week';
+            document.getElementsByTagName('head')[0].appendChild(script);
+        }
 
-
-            //Load the json data.
-            map.data.addGeoJson(earthquakeJSON);
-
-            map.data.setStyle(function(feature) {
-                var magnitude = feature.getProperty('mag');
-                return {
-                    icon: getCircle(magnitude)
-                };
-            });
-
-            function getCircle(magnitude) {
-                var circle = {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    fillColor: 'red',
-                    fillOpacity: .2,
-                    scale: Math.pow(2, magnitude) / 2,
-                    strokeColor: 'white',
-                    strokeWeight: .5
-                };
-                return circle;
-            }
-
-
+        function eqfeed_callback(results) {
+            console.log(results);
+            map.data.addGeoJson(results);
         }
 
         // Call the initialize function after the page has finished loading

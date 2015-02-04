@@ -10,11 +10,7 @@
     </style>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
-    <script
-            src="https://maps.googleapis.com/maps/api/js?libraries=geometry,visualization">
-    </script>
-
-    <script src="jsonData.js"></script>
+    <script src="../earthquakeJSON.js"></script>
 
     <script>
         var map;
@@ -31,24 +27,26 @@
 
 
             //Load the json data.
-            //map.data.addGeoJson(earthquakeJSON);
+            map.data.addGeoJson(earthquakeJSON);
 
-            var heatmapData = [];
-            for (var i = 0; i < earthquakeJSON.features.length; i++) {
-                var coords = earthquakeJSON.features[i].geometry.coordinates;
-                var latLng = new google.maps.LatLng(coords[1], coords[0]);
-                var magnitude = earthquakeJSON.features[i].properties.mag;
-                var weightedLoc = {
-                    location: latLng,
-                    weight: Math.pow(2, magnitude)
+            map.data.setStyle(function(feature) {
+                var magnitude = feature.getProperty('mag');
+                return {
+                    icon: getCircle(magnitude)
                 };
-                heatmapData.push(weightedLoc);
-            }
-            var heatmap = new google.maps.visualization.HeatmapLayer({
-                data: heatmapData,
-                dissipating: false,
-                map: map
             });
+
+            function getCircle(magnitude) {
+                var circle = {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: 'red',
+                    fillOpacity: .2,
+                    scale: Math.pow(2, magnitude) / 2,
+                    strokeColor: 'white',
+                    strokeWeight: .5
+                };
+                return circle;
+            }
 
 
         }

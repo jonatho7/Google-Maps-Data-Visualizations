@@ -10,7 +10,7 @@
     </style>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
-    <script src="jsonData.js"></script>
+    <script src="../earthquakeJSON.js"></script>
 
     <script>
         var map;
@@ -28,27 +28,6 @@
 
             //Load the json data.
             map.data.addGeoJson(earthquakeJSON);
-
-            map.data.setStyle(function(feature) {
-                var magnitude = feature.getProperty('mag');
-                return {
-                    icon: getCircle(magnitude)
-                };
-            });
-
-            function getCircle(magnitude) {
-                var circle = {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    fillColor: 'red',
-                    fillOpacity: .2,
-                    scale: Math.pow(2, magnitude) / 2,
-                    strokeColor: 'white',
-                    strokeWeight: .5
-                };
-                return circle;
-            }
-
-
         }
 
         // Call the initialize function after the page has finished loading
@@ -57,9 +36,6 @@
     </script>
 </head>
 <body>
-    <div style="width: 500px; height: 500px;">
-        <div id="map-canvas"></div>
-    </div>
-
+<div id="map-canvas"></div>
 </body>
 </html>

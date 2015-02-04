@@ -10,7 +10,8 @@
     </style>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
-    <script src="jsonData.js"></script>
+    <script src="pointOne.js"></script>
+    <script src="pointTwo.js"></script>
 
     <script>
         var map;
@@ -27,7 +28,7 @@
 
 
             //Load the json data.
-            map.data.addGeoJson(earthquakeJSON);
+            map.data.addGeoJson(pointOneJSON);
 
             map.data.setStyle(function(feature) {
                 var magnitude = feature.getProperty('mag');
@@ -48,6 +49,8 @@
                 return circle;
             }
 
+            map.data.addGeoJson(pointTwoJSON);
+
 
         }
 
@@ -57,12 +60,6 @@
     </script>
 </head>
 <body>
-    <div style="width: 1000px; height: 3000px; border: 4px dotted red;">
-        <canvas style="width: 500px; height: 500px; border: 4px solid orange;">
-
-        </canvas>
-    </div>
-
-
+<div id="map-canvas"></div>
 </body>
 </html>
