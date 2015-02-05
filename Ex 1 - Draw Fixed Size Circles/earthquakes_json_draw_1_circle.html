@@ -10,8 +10,6 @@
     </style>
     <script src="https://maps.googleapis.com/maps/api/js"></script>
 
-    <script src="jsonData.js"></script>
-
     <script>
         var map;
 
@@ -24,29 +22,6 @@
             map = new google.maps.Map(document.getElementById('map-canvas'),
                     mapOptions);
 
-
-
-            //Load the json data.
-            map.data.addGeoJson(earthquakeJSON);
-
-            map.data.setStyle(function(feature) {
-                var magnitude = feature.getProperty('mag');
-                return {
-                    icon: getCircle(magnitude)
-                };
-            });
-
-            function getCircle(magnitude) {
-                var circle = {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    fillColor: 'red',
-                    fillOpacity: .2,
-                    scale: Math.pow(2, magnitude) / 2,
-                    strokeColor: 'white',
-                    strokeWeight: .5
-                };
-                return circle;
-            }
 
             var cityCenter = new google.maps.LatLng(41.878113, -87.629798);
             var cityPopulation = 2714856;
@@ -64,9 +39,6 @@
 
             // Add the circle for this city to the map.
             var cityCircle = new google.maps.Circle(populationOptions);
-
-
-
 
         }
 
